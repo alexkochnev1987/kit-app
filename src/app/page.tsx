@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { Station } from "@/types/station";
 import { getStationById, getAllStations } from "@/utils/stationUtils";
 import { Card } from "@/components/PromoCard/Card";
 
 export default function Home() {
-  const searchParams = useSearchParams();
   const [currentStation, setCurrentStation] = useState<Station | null>(null);
   const [allStations, setAllStations] = useState<Station[]>([]);
 
@@ -16,18 +14,9 @@ export default function Home() {
     const stations = getAllStations();
     setAllStations(stations);
 
-    // Get station ID from URL parameters
-    const stationId = searchParams.get("id");
-
-    if (stationId) {
-      // Find station by ID
-      const station = getStationById(stationId);
-      setCurrentStation(station || stations[0]);
-    } else {
-      // Default to first station
-      setCurrentStation(stations[0]);
-    }
-  }, [searchParams]);
+    // Default to first station
+    setCurrentStation(stations[0]);
+  }, []);
 
   const handleStationChange = (stationId: number) => {
     const station = getStationById(stationId);
