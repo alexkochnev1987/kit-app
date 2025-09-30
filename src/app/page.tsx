@@ -1,103 +1,105 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Station } from "@/types/station";
+import { getStationById, getAllStations } from "@/utils/stationUtils";
+import { Card } from "@/components/PromoCard/DynamicCard";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const searchParams = useSearchParams();
+  const [currentStation, setCurrentStation] = useState<Station | null>(null);
+  const [allStations, setAllStations] = useState<Station[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // Load all stations
+    const stations = getAllStations();
+    setAllStations(stations);
+
+    // Get station ID from URL parameters
+    const stationId = searchParams.get("id");
+
+    if (stationId) {
+      // Find station by ID
+      const station = getStationById(stationId);
+      setCurrentStation(station || stations[0]);
+    } else {
+      // Default to first station
+      setCurrentStation(stations[0]);
+    }
+  }, [searchParams]);
+
+  const handleStationChange = (stationId: number) => {
+    const station = getStationById(stationId);
+    if (station) {
+      setCurrentStation(station);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Promo Card Demo
+          </h1>
+          <p className="text-gray-600">
+            Switch between stations to see different card types
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Station Selector */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Select Station:
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {allStations.map((station) => (
+              <button
+                key={station.id}
+                onClick={() => handleStationChange(station.id)}
+                className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                  currentStation?.id === station.id
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                <div className="font-medium text-sm text-gray-900 truncate">
+                  {station.title}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {station.color && station.color !== null
+                    ? "Dynamic Card"
+                    : "Default Card"}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Promo Card Section */}
+        {currentStation && (
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+              Current Station Card:
+            </h2>
+            <div className="max-w">
+              <div className={`hidden md:block`}>
+                <Card station={currentStation} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Notice */}
+        <div className="md:hidden mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <p className="text-yellow-800 text-sm">
+            <strong>Note:</strong> Promo cards are hidden on mobile devices as
+            per requirements. View on desktop to see the cards.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

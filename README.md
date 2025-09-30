@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Promo Card Demo - NextJS
 
-## Getting Started
+A NextJS application showcasing interactive Promo Cards for radio stations with conditional rendering based on station metadata.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Two Card Types:**
+
+  - **Default Card**: Clean, minimal design for stations without color values
+  - **Dynamic Card**: Vibrant, gradient design for stations with color values
+
+- **Responsive Design**: Cards are hidden on mobile devices (desktop-only display)
+- **Interactive Station Selection**: Switch between different stations to see various card types
+- **URL Parameter Support**: Change station via URL parameter `?id=station-1`
+- **TypeScript**: Full type safety with interfaces and proper typing
+- **Tailwind CSS**: Modern, responsive styling with hover effects
+
+## Station Data
+
+The application includes 5 sample stations with different configurations:
+
+- **Station 1** (Alpha): Dynamic card with blue color
+- **Station 2** (Beta): Default card (no color)
+- **Station 3** (Gamma): Dynamic card with green color
+- **Station 4** (Delta): Default card (no color)
+- **Station 5** (Epsilon): Dynamic card with purple color
+
+## Usage
+
+### Local Development
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start development server:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### URL Parameters
+
+You can specify a station directly via URL:
+
+- `http://localhost:3000?id=station-1` - Shows Station Alpha (Dynamic)
+- `http://localhost:3000?id=station-2` - Shows Station Beta (Default)
+- `http://localhost:3000?id=station-3` - Shows Station Gamma (Dynamic)
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx          # Main page with station selector
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # Global styles
+├── components/
+│   └── PromoCard/
+│       ├── index.tsx     # Main PromoCard component
+│       ├── DefaultCard.tsx # Default card variant
+│       └── DynamicCard.tsx # Dynamic card variant
+├── data/
+│   └── stations.json     # Station metadata
+├── types/
+│   └── station.ts        # TypeScript interfaces
+└── utils/
+    └── stationUtils.ts   # Utility functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### PromoCard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Main component that conditionally renders Default or Dynamic cards based on station color presence.
 
-## Learn More
+### DefaultCard
 
-To learn more about Next.js, take a look at the following resources:
+Clean, minimal design with subtle styling for stations without color values.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### DynamicCard
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Vibrant design with gradient backgrounds and enhanced styling for stations with color values.
 
-## Deploy on Vercel
+## Technical Details
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: NextJS 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Responsive**: Mobile-first design (cards hidden on mobile)
+- **State Management**: React hooks (useState, useEffect)
+- **URL Handling**: Next.js useSearchParams
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+The application is ready for deployment on platforms like:
+
+- Vercel (recommended for NextJS)
+- Netlify
+- Render
+- Any Node.js hosting platform
+
+### Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+## Requirements Fulfilled
+
+✅ **Default and Dynamic Cards**: Conditional rendering based on color presence  
+✅ **Desktop Only**: Cards hidden on mobile devices  
+✅ **Station Metadata**: Title, color, logo support  
+✅ **NextJS Implementation**: Built with NextJS 15 and TypeScript  
+✅ **Hardcoded JSON Data**: Station data in JSON format  
+✅ **Parameter Support**: Station switching via URL parameters  
+✅ **Responsive Design**: Tailwind CSS with proper breakpoints  
+✅ **Clean Architecture**: Modular components with TypeScript interfaces
