@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "../Icons/Icon";
 
 interface AppStoreButtonProps {
   icon: string;
@@ -9,6 +10,7 @@ interface AppStoreButtonProps {
 
 /**
  * App Store button component with customizable icon and text
+ * Matches Figma design for App Store and Google Play buttons
  */
 export const AppStoreButton: React.FC<AppStoreButtonProps> = ({
   icon,
@@ -18,14 +20,18 @@ export const AppStoreButton: React.FC<AppStoreButtonProps> = ({
 }) => {
   return (
     <button
-      className={`flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors w-full ${className}`}
+      className={`flex items-center bg-[#212121] text-white rounded-lg hover:bg-[#333333] transition-colors ${className}`}
+      style={{ width: "162px", height: "48px", padding: "0 15px", gap: "12px" }}
     >
-      <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-        <span className="text-black text-xs font-bold">{icon}</span>
+      <div
+        className="flex items-center justify-center"
+        style={{ width: "24px", height: "24px" }}
+      >
+        <Icon iconName={icon} width={24} height={24} />
       </div>
       <div className="text-left">
-        <div className="text-xs">{topText}</div>
-        <div className="text-sm font-semibold">{bottomText}</div>
+        <div className="text-xs text-white/80">{topText}</div>
+        <div className="text-sm font-semibold text-white">{bottomText}</div>
       </div>
     </button>
   );

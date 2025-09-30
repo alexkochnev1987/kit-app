@@ -2,52 +2,42 @@ import React from "react";
 import { AppStoreButton } from "./AppStoreButton";
 
 interface QRCodeSectionProps {
+  isDynamic: boolean;
   className?: string;
 }
 
-/**
- * QR Code section with app store download buttons
- * Matches the Figma design with QR code and store buttons
- */
 export const QRCodeSection: React.FC<QRCodeSectionProps> = ({
+  isDynamic,
   className = "",
 }) => {
   return (
-    <div className={`flex items-center space-x-4 ${className}`}>
-      {/* QR Code */}
+    <div
+      className={`flex xl:flex-row flex-col xxl:flex-row items-center pr-4 md:pr-8 lg:pr-12 xl:pr-16`}
+      style={{ gap: "24px" }}
+    >
       <div className="relative">
-        <div className="w-24 h-24 bg-black rounded-lg flex items-center justify-center">
-          {/* QR Code pattern - simplified representation */}
-          <div className="grid grid-cols-8 gap-0.5 w-20 h-20">
-            {Array.from({ length: 64 }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-2 h-2 ${
-                  Math.random() > 0.5 ? "bg-white" : "bg-black"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-        {/* R Live icon in center of QR code */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
-            <span className="text-white text-xs font-bold">R</span>
-          </div>
+        <div className="bg-white border border-gray-100 rounded-lg shadow-sm flex items-center justify-center w-[108px] h-[108px]">
+          <img
+            src="/images/qr-code.png"
+            alt="QR Code"
+            className="object-cover rounded"
+            style={{ width: "96px", height: "96px" }}
+          />
         </div>
       </div>
 
-      {/* App Store Buttons */}
-      <div className="space-y-2">
-        {/* App Store Button */}
+      <div className="flex flex-col" style={{ gap: "9px" }}>
         <AppStoreButton
-          icon="🍎"
+          icon="apple-icon"
           topText="Download on the"
           bottomText="App Store"
         />
 
-        {/* Google Play Button */}
-        <AppStoreButton icon="▶" topText="GET IT ON" bottomText="Google Play" />
+        <AppStoreButton
+          icon={"google"}
+          topText="GET IT ON"
+          bottomText="Google Play"
+        />
       </div>
     </div>
   );

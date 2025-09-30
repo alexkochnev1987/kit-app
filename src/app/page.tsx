@@ -1,33 +1,49 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Station } from "@/types/station";
 import { getStationById, getAllStations } from "@/utils/stationUtils";
 import { Card } from "@/components/PromoCard/Card";
 
 export default function Home() {
   const [currentStation, setCurrentStation] = useState<Station | null>(null);
-  const [allStations, setAllStations] = useState<Station[]>([]);
+  const [allStations, setAllStations] = useState<Station[]>(getAllStations());
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Load all stations
     const stations = getAllStations();
     setAllStations(stations);
 
-    // Default to first station
+    // Check for station ID in URL parameters
+    const stationId = searchParams.get("id");
+    if (stationId) {
+      const station = getStationById(stationId);
+      if (station) {
+        setCurrentStation(station);
+        return;
+      }
+    }
+
+    // Default to first station if no valid ID in URL
     setCurrentStation(stations[0]);
-  }, []);
+  }, [searchParams]);
 
   const handleStationChange = (stationId: number) => {
     const station = getStationById(stationId);
     if (station) {
       setCurrentStation(station);
+      // Update URL with station ID
+      const url = new URL(window.location.href);
+      url.searchParams.set("id", stationId.toString());
+      window.history.pushState({}, "", url.toString());
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -69,14 +85,9 @@ export default function Home() {
 
         {/* Promo Card Section */}
         {currentStation && (
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
-              Current Station Card:
-            </h2>
-            <div className="max-w">
-              <div className={`hidden md:block`}>
-                <Card station={currentStation} />
-              </div>
+          <div className="flex justify-center w-full">
+            <div className={`hidden lg:block w-full`}>
+              <Card station={currentStation} />
             </div>
           </div>
         )}
