@@ -10,13 +10,11 @@ import Link from "next/link";
  * Dynamic: station.color has value (colored logo background)
  */
 export const Card: React.FC<CardProps> = ({ station }) => {
-  const isDynamic = station.color && station.color !== null;
-
   return (
     <div className="relative overflow-hidden pt-10">
       <div className="bg-[#DBEAFE] border border-[#BFDBFE] rounded-2xl  p-12 w-full h-[312px] w-full">
         <div className="flex items-center h-full">
-          <QRCodeSection isDynamic={!!isDynamic} />
+          <QRCodeSection />
 
           {/* Center - Phone mockup with station color */}
           <PhoneMockup station={station} />

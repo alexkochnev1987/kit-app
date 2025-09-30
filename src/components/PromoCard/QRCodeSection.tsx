@@ -1,15 +1,7 @@
 import React from "react";
 import { AppStoreButton } from "./AppStoreButton";
 
-interface QRCodeSectionProps {
-  isDynamic: boolean;
-  className?: string;
-}
-
-export const QRCodeSection: React.FC<QRCodeSectionProps> = ({
-  isDynamic,
-  className = "",
-}) => {
+export const QRCodeSection = () => {
   return (
     <div
       className={`flex xl:flex-row flex-col xxl:flex-row items-center pr-4 md:pr-8 lg:pr-12 xl:pr-16`}
