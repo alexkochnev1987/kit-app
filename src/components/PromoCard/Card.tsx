@@ -1,5 +1,5 @@
 import React from "react";
-import { DynamicCardProps } from "@/types/station";
+import { CardProps } from "@/types/station";
 import { PhoneMockup } from "./PhoneMockup";
 import { QRCodeSection } from "./QRCodeSection";
 
@@ -7,7 +7,7 @@ import { QRCodeSection } from "./QRCodeSection";
  * Card component - displayed when station has a color value
  * Matches Figma design with light blue-gray background and colored phone mockup
  */
-export const Card: React.FC<DynamicCardProps> = ({ station }) => {
+export const Card: React.FC<CardProps> = ({ station }) => {
   return (
     <div className={`bg-blue-50 rounded-2xl p-8 shadow-lg `}>
       {/* Main content */}

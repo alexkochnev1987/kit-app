@@ -7,19 +7,8 @@ export interface Station {
   description?: string;
 }
 
-// Props for PromoCard component
-export interface PromoCardProps {
-  station: Station;
-  className?: string;
-}
-
 // Props for individual card variants
-export interface DefaultCardProps {
-  station: Station;
-  className?: string;
-}
-
-export interface DynamicCardProps {
+export interface CardProps {
   station: Station;
   className?: string;
 }

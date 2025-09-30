@@ -21,12 +21,3 @@ export const getStationById = (id: string | number): Station | undefined => {
     | Station
     | undefined;
 };
-
-/**
- * Get a random station for demo purposes
- */
-export const getRandomStation = (): Station => {
-  const stations = getAllStations();
-  const randomIndex = Math.floor(Math.random() * stations.length);
-  return stations[randomIndex];
-};

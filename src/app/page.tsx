@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Station } from "@/types/station";
 import { getStationById, getAllStations } from "@/utils/stationUtils";
-import { Card } from "@/components/PromoCard/DynamicCard";
+import { Card } from "@/components/PromoCard/Card";
 
 export default function Home() {
   const searchParams = useSearchParams();
